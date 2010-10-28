@@ -1,9 +1,5 @@
-require 'nuggets/range/quantile_mixin'
+require 'nuggets/range/quantile'
 require 'erb'
-
-class Range
-  include Nuggets::Range::QuantileMixin
-end
 
 module Jekyll
 
@@ -52,6 +48,7 @@ module Jekyll
   end
 
   class TagPage < Page
+
     def initialize(site, base, dir, name, data = {})
       self.content = data.delete('content') || ''
       self.data    = data
