@@ -19,7 +19,7 @@ And in your <tt>_config.yml</tt> you have to define your layout used to generate
   tag_page_layout: tag_page
   tag_page_dir: tag
 
-Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page.
+Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you got a <tt>tags</tt> filter which you can feed withe a <tt>post</tt> or a <tt>site</tt> object to get a link list of all it's tags.
 
 === Example tag page layout
 
@@ -29,7 +29,7 @@ Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <t
   <h2>{{ page.tag }}</h2>
   <ul>
   {% for post in page.posts %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }})</li>
+    <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }} | Tags: {{ post | tags }})</li>
   {% endfor %}
   </ul>
 

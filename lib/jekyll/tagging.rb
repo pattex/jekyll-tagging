@@ -71,16 +71,25 @@ module Jekyll
       dir = site['tag_page_dir']
 
       site['tag_data'].map { |tag, set|
-        tag_link(tag, set, tag_url(tag, dir))
+        tag_link(tag, tag_url(tag, dir), { :class => "set-#{set}" })
       }.join(' ')
     end
 
-    def tag_link(tag, set, url = tag_url(tag))
-      %Q{<a href="#{url}" class="set-#{set}">#{tag}</a>}
+    def tag_link(tag, url = tag_url(tag), html_opts = nil)
+      unless html_opts.nil?
+        html_opts = ' ' + html_opts.map { |k, v| %Q{#{k}="#{v}"} }.join(' ')
+      end
+      %Q{<a href="#{url}"#{html_opts}>#{tag}</a>}
     end
 
-    def tag_url(tag, dir = DEFAULT_TAG_PAGE_DIR)
+    def tag_url(tag, dir = Tagger::DEFAULT_TAG_PAGE_DIR)
       "/#{dir}/#{ERB::Util.u(tag)}.html"
+    end
+
+    def tags(obj)
+      tags = obj['tags'][0].is_a?(Array) ? obj['tags'].map{ |t| t[0]} : obj['tags']
+      tags.delete_if { |t| !t.is_a?(String) }
+      tags.map { |t| tag_link(t, tag_url(t)) }.join(', ')
     end
 
   end
