@@ -35,14 +35,11 @@ module Jekyll
     # classes are: set-1..set-5.
     #
     # [[<TAG>, <CLASS>], ...]
-    def calculate_tag_cloud(site)
-      tag_data = []
-      max   = site.tags.map { |t| t[1].size }.max
-      site.tags.sort.each { |t|
-        quant = (1..max).quantile(t[1].size, 5)
-        tag_data << [t[0], "set-#{quant}"]
-      }
-      tag_data
+    def calculate_tag_cloud(site, num = 5)
+      tags = site.tags.map { |tag, posts| [tag, posts.size] }.sort
+      range = 1..tags.map { |_, size| size }.max
+
+      tags.map { |tag, size| [tag, "set-#{range.quantile(size, num)}"] }
     end
 
   end
