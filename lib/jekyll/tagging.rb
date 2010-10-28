@@ -7,8 +7,10 @@ module Jekyll
 
     safe true
 
+    DEFAULT_TAG_PAGE_DIR = 'tag'
+
     def generate(site)
-      @tag_page_dir    = site.config['tag_page_dir'] || 'tag'
+      @tag_page_dir    = site.config['tag_page_dir'] || DEFAULT_TAG_PAGE_DIR
       @tag_page_layout = site.config['tag_page_layout']
 
       generate_tag_pages(site) if @tag_page_layout
@@ -39,7 +41,7 @@ module Jekyll
       tags = site.tags.map { |tag, posts| [tag, posts.size] }.sort
       range = 1..tags.map { |_, size| size }.max
 
-      tags.map { |tag, size| [tag, "set-#{range.quantile(size, num)}"] }
+      tags.map { |tag, size| [tag, range.quantile(size, num)] }
     end
 
   end
@@ -66,9 +68,19 @@ module Jekyll
   module Filters
 
     def tag_cloud(site)
-      site['tag_data'].collect { |t|
-        "<a href=\"/#{site['tag_page_dir']}/#{ERB::Util.u(t[0])}.html\" class=\"#{t[1]}\">#{t[0]}</a>"
+      dir = site['tag_page_dir']
+
+      site['tag_data'].map { |tag, set|
+        tag_link(tag, set, tag_url(tag, dir))
       }.join(' ')
+    end
+
+    def tag_link(tag, set, url = tag_url(tag))
+      %Q{<a href="#{url}" class="set-#{set}">#{tag}</a>}
+    end
+
+    def tag_url(tag, dir = DEFAULT_TAG_PAGE_DIR)
+      "/#{dir}/#{ERB::Util.u(tag)}.html"
     end
 
   end
