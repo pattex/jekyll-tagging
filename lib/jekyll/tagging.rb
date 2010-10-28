@@ -88,8 +88,7 @@ module Jekyll
 
     def tags(obj)
       tags = obj['tags'][0].is_a?(Array) ? obj['tags'].map{ |t| t[0]} : obj['tags']
-      tags.delete_if { |t| !t.is_a?(String) }
-      tags.map { |t| tag_link(t, tag_url(t)) }.join(', ')
+      tags.map { |t| tag_link(t, tag_url(t)) if t.is_a?(String) }.compact.join(', ')
     end
 
   end
