@@ -21,8 +21,8 @@ module Jekyll
     # A <tt>tag_page_layout</tt> have to be defined in your <tt>_config.yml</tt>
     # to use this.
     def generate_tag_pages(site)
-      site.tags.each { |t|
-        site.pages << new_tag_page(site, site.source, @tag_page_dir, t[0], t[1])
+      site.tags.each { |tag, posts|
+        site.pages << new_tag_page(site, site.source, @tag_page_dir, tag, posts.sort.reverse)
       }
     end
 
