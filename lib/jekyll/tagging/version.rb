@@ -6,7 +6,7 @@ module Jekyll
 
       MAJOR = 0
       MINOR = 1
-      TINY  = 1
+      TINY  = 2
 
       class << self
 
