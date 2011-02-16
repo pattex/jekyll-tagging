@@ -1,4 +1,4 @@
-require %q{lib/jekyll/tagging/version}
+require File.expand_path(%q{../lib/jekyll/tagging/version}, __FILE__)
 
 begin
   require 'hen'
@@ -8,19 +8,15 @@ begin
       :name         => %q{jekyll-tagging},
       :version      => Jekyll::Tagging::VERSION,
       :summary      => %q{Jekyll plugin to automatically generate a tag cloud and tag pages.},
-      :files        => FileList['lib/**/*.rb'].to_a,
-      :extra_files  => FileList['[A-Z]*'].to_a,
-      :dependencies => %w[ruby-nuggets],
       :authors      => ['Arne Eilermann', 'Jens Wille'],
       :email        => ['eilermann@lavabit.com', 'jens.wille@uni-koeln.de'],
-      :homepage     => %q{http://github.com/pattex/jekyll-tagging}
+      :homepage     => :pattex,
+      :dependencies => %w[ruby-nuggets]
     }
   }}
-rescue LoadError
-  warn "Please install the `hen' gem."
+rescue LoadError => err
+  warn "Please install the `hen' gem. (#{err})"
 end
-
-### Place your custom Rake tasks here.
 
 begin
   require 'jekyll/testtasks/rake'
