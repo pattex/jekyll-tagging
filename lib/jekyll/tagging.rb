@@ -7,13 +7,24 @@ module Jekyll
 
     safe true
 
-    DEFAULT_TAG_PAGE_DIR = 'tag'
-
     def generate(site)
-      @tag_page_dir    = site.config['tag_page_dir'] || DEFAULT_TAG_PAGE_DIR
+      unless Tagger.const_defined?(:TAG_PAGE_DIR)
+        Tagger.const_set('TAG_PAGE_DIR', site.config['tag_page_dir'] || 'tag')
+      end
+
       @tag_page_layout = site.config['tag_page_layout']
 
-      generate_tag_pages(site) if @tag_page_layout
+      unless Jekyll::Filters.const_defined?(:PRETTY_URL)
+        Jekyll::Filters.const_set('PRETTY_URL', site.permalink_style == :pretty)
+      end
+
+      if @tag_page_layout
+        generate_tag_pages(site)
+      else
+        $stderr.puts 'WARNING: You have to define a tag_page_layout in ' +
+          'configuration file.'
+      end
+
       site.config.update({ 'tag_data' => calculate_tag_cloud(site) })
     end
 
@@ -22,7 +33,7 @@ module Jekyll
     # to use this.
     def generate_tag_pages(site)
       site.tags.each { |tag, posts|
-        site.pages << new_tag_page(site, site.source, @tag_page_dir, tag, posts.sort.reverse)
+        site.pages << new_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
       }
     end
 
@@ -68,10 +79,8 @@ module Jekyll
   module Filters
 
     def tag_cloud(site)
-      dir = site['tag_page_dir']
-
       site['tag_data'].map { |tag, set|
-        tag_link(tag, tag_url(tag, dir), { :class => "set-#{set}" })
+        tag_link(tag, tag_url(tag), { :class => "set-#{set}" })
       }.join(' ')
     end
 
@@ -82,12 +91,12 @@ module Jekyll
       %Q{<a href="#{url}"#{html_opts}>#{tag}</a>}
     end
 
-    def tag_url(tag, dir = Tagger::DEFAULT_TAG_PAGE_DIR)
-      "/#{dir}/#{ERB::Util.u(tag)}.html"
+    def tag_url(tag)
+      "/#{Tagger::TAG_PAGE_DIR}/#{ERB::Util.u(tag)}#{'.html' unless PRETTY_URL}"
     end
 
     def tags(obj)
-      tags = obj['tags'][0].is_a?(Array) ? obj['tags'].map{ |t| t[0]} : obj['tags']
+      tags = obj['tags'][0].is_a?(Array) ? obj['tags'].map{ |t| t[0] } : obj['tags']
       tags.map { |t| tag_link(t, tag_url(t)) if t.is_a?(String) }.compact.join(', ')
     end
 
