@@ -21,8 +21,7 @@ module Jekyll
       if @tag_page_layout
         generate_tag_pages(site)
       else
-        $stderr.puts 'WARNING: You have to define a tag_page_layout in ' +
-          'configuration file.'
+        warn 'WARNING: You have to define a tag_page_layout in onfiguration file.'
       end
 
       site.config.update({ 'tag_data' => calculate_tag_cloud(site) })
