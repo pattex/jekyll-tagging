@@ -48,7 +48,8 @@ RubyGem:: <http://rubygems.org/gems/jekyll-tagging>
 
 === The MIT License
 
-Copyright (c) 2010 Arne Eilermann
+Copyright (c) 2010-2011 University of Cologne,
+Albertus-Magnus-Platz, 50923 Cologne, Germany
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
