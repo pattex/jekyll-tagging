@@ -13,6 +13,7 @@ module Jekyll
       end
 
       @tag_page_layout = site.config['tag_page_layout']
+      @tag_page_rss_layout = site.config['tag_page_rss_layout']
 
       unless Jekyll::Filters.const_defined?(:PRETTY_URL)
         Jekyll::Filters.const_set('PRETTY_URL', site.permalink_style == :pretty)
@@ -34,11 +35,21 @@ module Jekyll
       site.tags.each { |tag, posts|
         site.pages << new_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
       }
+      site.tags.each { |tag, posts|
+        site.pages << new_rss_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
+      }
     end
 
     def new_tag_page(site, base, dir, tag, posts)
       TagPage.new(site, base, dir, "#{tag}.html", {
         'layout' => @tag_page_layout,
+        'posts'  => posts,
+      })
+    end
+    
+    def new_rss_tag_page(site, base, dir, tag, posts)      
+      TagPage.new(site, base, dir, "#{tag}.xml", {
+        'layout' => @tag_page_rss_layout,
         'posts'  => posts,
       })
     end
