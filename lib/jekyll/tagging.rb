@@ -11,6 +11,10 @@ module Jekyll
       unless Tagger.const_defined?(:TAG_PAGE_DIR)
         Tagger.const_set('TAG_PAGE_DIR', site.config['tag_page_dir'] || 'tag')
       end
+      
+      unless Tagger.const_defined?(:TAG_PAGE_RSS_DIR)
+        Tagger.const_set('TAG_PAGE_RSS_DIR', site.config['tag_page_rss_dir'] || 'tag')
+      end
 
       @tag_page_layout = site.config['tag_page_layout']
       @tag_page_rss_layout = site.config['tag_page_rss_layout']
@@ -22,7 +26,7 @@ module Jekyll
       if @tag_page_layout
         generate_tag_pages(site)
       else
-        warn 'WARNING: You have to define a tag_page_layout in onfiguration file.'
+        warn 'WARNING: You have to define a tag_page_layout in configuration file.'
       end
 
       site.config.update({ 'tag_data' => calculate_tag_cloud(site) })
@@ -35,9 +39,12 @@ module Jekyll
       site.tags.each { |tag, posts|
         site.pages << new_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
       }
-      site.tags.each { |tag, posts|
-        site.pages << new_rss_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
-      }
+      
+      if @tag_page_rss_layout
+        site.tags.each { |tag, posts|
+            site.pages << new_rss_tag_page(site, site.source, TAG_PAGE_RSS_DIR, tag, posts.sort.reverse)      
+        }
+      end
     end
 
     def new_tag_page(site, base, dir, tag, posts)
