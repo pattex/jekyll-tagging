@@ -2,7 +2,7 @@
 
 By Arne Eilermann <mailto:eilermann@lavabit.com> and Jens Wille <mailto:jens.wille@uni-koeln.de>
 
-jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages and feeds to your Jekyll generated Website.
+jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages plus feeds to your Jekyll generated Website.
 
 == Usage
 
@@ -75,7 +75,7 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
 == Links
 
 <b></b>
-Documentation:: <http://rdoc.info/github/pattex/jekyll-tagging>
+Documentation:: <http://rubydoc.info/gems/jekyll-tagging/frames>
 Source code:: <http://github.com/pattex/jekyll-tagging>
 RubyGem:: <http://rubygems.org/gems/jekyll-tagging>
 
