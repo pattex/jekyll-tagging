@@ -21,6 +21,14 @@ And in your <tt>_config.yml</tt> you have to define your layout used to generate
 
 Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you got a <tt>tags</tt> filter which you can feed withe a <tt>post</tt> or a <tt>site</tt> object to get a link list of all its tags.
 
+You can optionally define a per tag RSS feed/xml.  In your <tt>_config.yml</tt> define the following:
+
+  tag_page_rss_layout: tag_rss_page
+  tag_page_rss_dir: tag
+  
+<tt>tag_page_dir</tt> and <tt>tag_page_rss_dir</tt> can have the same value.  Although the layout is specified as a .html file, the output will be a .xml file.
+
+
 === Example tag page layout
 
   ---
@@ -36,6 +44,33 @@ Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <t
   <div id="tag-cloud">
     {{ site | tag_cloud }}
   </div>
+  
+  
+=== Example tag rss page layout
+
+  ---
+  layout: nil
+  ---
+  <?xml version="1.0" encoding="utf-8"?>
+  <feed xmlns="http://www.w3.org/2005/Atom">  
+   <title>Your Title - {{ page.tag }}</title>
+   <link href="http://example.com{{ page.url }}" rel="self"/>
+   <link href="http://example.com/tag/{{ page.tag }}.html"/>
+   <updated>{{ site.time | date_to_xmlschema }}</updated>
+   <id>http://example.com/tag/{{ page.tag }}.html</id>
+   <author>
+     <name>Author Here</name>
+   </author>
+   {% for post in page.posts %}
+   <entry>
+     <title>{{ post.title }}</title>
+     <link href="http://example.com{{ post.url }}"/>
+     <updated>{{ post.date | date_to_xmlschema }}</updated>
+     <id>http://example.com{{ post.id }}</id>
+     <content type="html">{{ post.content | xml_escape }}</content>
+   </entry>
+   {% endfor %}
+  </feed>
 
 == Links
 
