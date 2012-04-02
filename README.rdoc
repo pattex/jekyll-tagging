@@ -8,7 +8,7 @@ jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages and feed
 
 Install it:
 
-  sudo gem install jekyll-tagging
+  gem install jekyll-tagging
 
 Add the following to your <tt>_plugins/ext.rb</tt> file:
 
