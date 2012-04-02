@@ -21,12 +21,12 @@ And in your <tt>_config.yml</tt> you have to define your layout used to generate
 
 Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you got a <tt>tags</tt> filter which you can feed withe a <tt>post</tt> or a <tt>site</tt> object to get a link list of all its tags.
 
-You can optionally define a per tag RSS feed/xml.  In your <tt>_config.yml</tt> define the following:
+You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt> define the following:
 
-  tag_page_rss_layout: tag_rss_page
-  tag_page_rss_dir: tag
+  tag_feed_layout: tag_feed
+  tag_feed_dir: tag
   
-<tt>tag_page_dir</tt> and <tt>tag_page_rss_dir</tt> can have the same value.  Although the layout is specified as a .html file, the output will be a .xml file.
+<tt>tag_page_dir</tt> and <tt>tag_feed_dir</tt> can have the same value.  Although the layout is specified as a .html file, the output will be a .xml file.
 
 
 === Example tag page layout
@@ -46,7 +46,7 @@ You can optionally define a per tag RSS feed/xml.  In your <tt>_config.yml</tt> 
   </div>
   
   
-=== Example tag rss page layout
+=== Example layout of an Atom feed
 
   ---
   layout: nil

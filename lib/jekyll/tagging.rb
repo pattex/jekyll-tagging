@@ -11,13 +11,13 @@ module Jekyll
       unless Tagger.const_defined?(:TAG_PAGE_DIR)
         Tagger.const_set('TAG_PAGE_DIR', site.config['tag_page_dir'] || 'tag')
       end
-      
-      unless Tagger.const_defined?(:TAG_PAGE_RSS_DIR)
-        Tagger.const_set('TAG_PAGE_RSS_DIR', site.config['tag_page_rss_dir'] || 'tag')
+
+      unless Tagger.const_defined?(:tag_feed_dir)
+        Tagger.const_set('tag_feed_dir', site.config['tag_feed_dir'] || 'tag')
       end
 
       @tag_page_layout = site.config['tag_page_layout']
-      @tag_page_rss_layout = site.config['tag_page_rss_layout']
+      @tag_feed_layout = site.config['tag_feed_layout']
 
       unless Jekyll::Filters.const_defined?(:PRETTY_URL)
         Jekyll::Filters.const_set('PRETTY_URL', site.permalink_style == :pretty)
@@ -39,10 +39,10 @@ module Jekyll
       site.tags.each { |tag, posts|
         site.pages << new_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
       }
-      
-      if @tag_page_rss_layout
+
+      if @tag_feed_layout
         site.tags.each { |tag, posts|
-            site.pages << new_rss_tag_page(site, site.source, TAG_PAGE_RSS_DIR, tag, posts.sort.reverse)      
+            site.pages << new_tag_feed(site, site.source, tag_feed_dir, tag, posts.sort.reverse)
         }
       end
     end
@@ -53,10 +53,10 @@ module Jekyll
         'posts'  => posts,
       })
     end
-    
-    def new_rss_tag_page(site, base, dir, tag, posts)      
+
+    def new_tag_feed(site, base, dir, tag, posts)
       TagPage.new(site, base, dir, "#{tag}.xml", {
-        'layout' => @tag_page_rss_layout,
+        'layout' => @tag_feed_layout,
         'posts'  => posts,
       })
     end
