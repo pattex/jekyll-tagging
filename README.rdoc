@@ -2,7 +2,7 @@
 
 By Arne Eilermann <mailto:eilermann@lavabit.com> and Jens Wille <mailto:jens.wille@uni-koeln.de>
 
-jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages to your Jekyll generated Website.
+jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages and feeds to your Jekyll generated Website.
 
 == Usage
 
@@ -26,7 +26,7 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
   tag_feed_layout: tag_feed
   tag_feed_dir: tag
   
-<tt>tag_page_dir</tt> and <tt>tag_feed_dir</tt> can have the same value.  Although the layout is specified as a .html file, the output will be a .xml file.
+(<tt>tag_page_dir</tt> and <tt>tag_feed_dir</tt> can have the same value.)
 
 
 === Example tag page layout

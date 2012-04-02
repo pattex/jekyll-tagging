@@ -8,12 +8,10 @@ module Jekyll
     safe true
 
     def generate(site)
-      unless Tagger.const_defined?(:TAG_PAGE_DIR)
-        Tagger.const_set('TAG_PAGE_DIR', site.config['tag_page_dir'] || 'tag')
-      end
-
-      unless Tagger.const_defined?(:tag_feed_dir)
-        Tagger.const_set('tag_feed_dir', site.config['tag_feed_dir'] || 'tag')
+      %w[TAG_PAGE_DIR TAG_FEED_DIR].each do |dir_name|
+        unless Tagger.const_defined?(dir_name.to_sym)
+          Tagger.const_set(dir_name, site.config[dir_name.downcase] || 'tag')
+        end
       end
 
       @tag_page_layout = site.config['tag_page_layout']
@@ -37,26 +35,16 @@ module Jekyll
     # to use this.
     def generate_tag_pages(site)
       site.tags.each { |tag, posts|
-        site.pages << new_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
+        site.pages << new_tag(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse, @tag_page_layout)
+        if @tag_feed_layout
+          site.pages << new_tag(site, site.source, TAG_FEED_DIR, tag, posts.sort.reverse, @tag_feed_layout)
+        end
       }
-
-      if @tag_feed_layout
-        site.tags.each { |tag, posts|
-            site.pages << new_tag_feed(site, site.source, tag_feed_dir, tag, posts.sort.reverse)
-        }
-      end
     end
 
-    def new_tag_page(site, base, dir, tag, posts)
-      TagPage.new(site, base, dir, "#{tag}.html", {
-        'layout' => @tag_page_layout,
-        'posts'  => posts,
-      })
-    end
-
-    def new_tag_feed(site, base, dir, tag, posts)
-      TagPage.new(site, base, dir, "#{tag}.xml", {
-        'layout' => @tag_feed_layout,
+    def new_tag(site, base, dir, tag, posts, layout)
+      TagPage.new(site, base, dir, "#{tag}#{site.layouts[layout].ext}", {
+        'layout' => layout,
         'posts'  => posts,
       })
     end
