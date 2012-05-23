@@ -24,7 +24,8 @@ module Jekyll
         warn 'WARNING: You have to define a tag_page_layout in onfiguration file.'
       end
 
-      site.config.update({ 'tag_data' => calculate_tag_cloud(site) })
+      t = { 'tag_data' => calculate_tag_cloud(site) }
+      site.respond_to?(:add_payload) ? site.add_payload(t) : site.config.update(t)
     end
 
     # Generates a page per tag and adds them to all the pages of +site+.
