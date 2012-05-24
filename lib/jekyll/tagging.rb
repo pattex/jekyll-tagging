@@ -8,11 +8,14 @@ module Jekyll
     safe true
 
     def generate(site)
-      unless Tagger.const_defined?(:TAG_PAGE_DIR)
-        Tagger.const_set('TAG_PAGE_DIR', site.config['tag_page_dir'] || 'tag')
+      %w[TAG_PAGE_DIR TAG_FEED_DIR].each do |dir_name|
+        unless Tagger.const_defined?(dir_name.to_sym)
+          Tagger.const_set(dir_name, site.config[dir_name.downcase] || 'tag')
+        end
       end
 
       @tag_page_layout = site.config['tag_page_layout']
+      @tag_feed_layout = site.config['tag_feed_layout']
 
       unless Jekyll::Filters.const_defined?(:PRETTY_URL)
         Jekyll::Filters.const_set('PRETTY_URL', site.permalink_style == :pretty)
@@ -21,7 +24,7 @@ module Jekyll
       if @tag_page_layout
         generate_tag_pages(site)
       else
-        warn 'WARNING: You have to define a tag_page_layout in onfiguration file.'
+        warn 'WARNING: You have to define a tag_page_layout in configuration file.'
       end
 
       t = { 'tag_data' => calculate_tag_cloud(site) }
@@ -33,13 +36,16 @@ module Jekyll
     # to use this.
     def generate_tag_pages(site)
       site.tags.each { |tag, posts|
-        site.pages << new_tag_page(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse)
+        site.pages << new_tag(site, site.source, TAG_PAGE_DIR, tag, posts.sort.reverse, @tag_page_layout)
+        if @tag_feed_layout
+          site.pages << new_tag(site, site.source, TAG_FEED_DIR, tag, posts.sort.reverse, @tag_feed_layout)
+        end
       }
     end
 
-    def new_tag_page(site, base, dir, tag, posts)
-      TagPage.new(site, base, dir, "#{tag}.html", {
-        'layout' => @tag_page_layout,
+    def new_tag(site, base, dir, tag, posts, layout)
+      TagPage.new(site, base, dir, "#{tag}#{site.layouts[layout].ext}", {
+        'layout' => layout,
         'posts'  => posts,
       })
     end
