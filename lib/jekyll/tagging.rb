@@ -55,7 +55,7 @@ module Jekyll
     #
     # [[<TAG>, <CLASS>], ...]
     def calculate_tag_cloud(site, num = 5)
-      tags = site.tags.map { |tag, posts| [tag, posts.size] }.sort
+      tags = site.tags.map { |tag, posts| [tag.to_s, posts.size] }.sort
       range = 1..tags.map { |_, size| size }.max unless tags.empty?
 
       tags.map { |tag, size| [tag, range.quantile(size, num)] }
