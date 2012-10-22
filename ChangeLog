@@ -1,5 +1,6 @@
-== 0.3.2 [unreleased]
+== 0.4.0 [2012-10-22]
 
+* Heavy refactoring to better support monkey patching.
 * Fixed issue when a number is used as a tag. (Fabrice Rossi)
 
 == 0.3.1 [2012-05-24]

@@ -20,6 +20,6 @@ end
 
 begin
   require 'jekyll/testtasks/rake'
-rescue LoadError
-  warn "Please install the `jekyll-testtasks' gem."
+rescue LoadError => err
+  warn "Please install the `jekyll-testtasks' gem. (#{err})"
 end

@@ -2,17 +2,17 @@
 
 Gem::Specification.new do |s|
   s.name = "jekyll-tagging"
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Arne Eilermann", "Jens Wille"]
-  s.date = "2012-05-24"
+  s.date = "2012-10-22"
   s.description = "Jekyll plugin to automatically generate a tag cloud and tag pages."
   s.email = ["eilermann@lavabit.com", "jens.wille@uni-koeln.de"]
   s.extra_rdoc_files = ["ChangeLog"]
   s.files = ["lib/jekyll/tagging.rb", "lib/jekyll/tagging/version.rb", "README.rdoc", "ChangeLog", "Rakefile"]
   s.homepage = "http://github.com/pattex/jekyll-tagging"
-  s.rdoc_options = ["--charset", "UTF-8", "--line-numbers", "--all", "--title", "jekyll-tagging Application documentation (v0.3.1)", "--main", "ChangeLog"]
+  s.rdoc_options = ["--charset", "UTF-8", "--line-numbers", "--all", "--title", "jekyll-tagging Application documentation (v0.4.0)", "--main", "ChangeLog"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
   s.summary = "Jekyll plugin to automatically generate a tag cloud and tag pages."
