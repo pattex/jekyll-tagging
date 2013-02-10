@@ -26,7 +26,7 @@ module Jekyll
     # A <tt>tag_page_layout</tt> have to be defined in your <tt>_config.yml</tt>
     # to use this.
     def generate_tag_pages
-      site.tags.each { |tag, posts| new_tag(tag, posts) }
+      active_tags.each { |tag, posts| new_tag(tag, posts) }
     end
 
     def new_tag(tag, posts)
@@ -56,13 +56,19 @@ module Jekyll
     def calculate_tag_cloud(num = 5)
       range = 0
 
-      tags = site.tags.map { |tag, posts|
+      tags = active_tags.map { |tag, posts|
         [tag.to_s, range < (size = posts.size) ? range = size : size]
       }
+
 
       range = 1..range
 
       tags.sort!.map! { |tag, size| [tag, range.quantile(size, num)] }
+    end
+
+    def active_tags
+      return site.tags unless site.config["ignored_tags"]
+      site.tags.reject { |t| site.config["ignored_tags"].include? t[0] }
     end
 
   end
@@ -87,7 +93,7 @@ module Jekyll
   module Filters
 
     def tag_cloud(site)
-      site['tag_data'].map { |tag, set|
+      active_tag_data.map { |tag, set|
         tag_link(tag, tag_url(tag), :class => "set-#{set}")
       }.join(' ')
     end
@@ -109,6 +115,10 @@ module Jekyll
       tags.join(', ')
     end
 
+    def active_tag_data(site = Tagger.site)
+      return site.config['tag_data'] unless site.config["ignored_tags"]
+      site.config["tag_data"].reject { |tag, set| site.config["ignored_tags"].include? tag }
+    end
   end
 
 end
