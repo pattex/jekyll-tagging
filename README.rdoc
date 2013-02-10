@@ -25,10 +25,13 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
 
   tag_feed_layout: tag_feed
   tag_feed_dir: tag
-  
+
 (<tt>tag_page_dir</tt> and <tt>tag_feed_dir</tt> can have the same value.)
 
 
+=== Ignoring tags
+
+Sometimes you don't want tag pages generated for certain pages. That's ok! Just add <tt>ignored_tags: [tags,to,ignore]</tt> to your <tt>_config.yml</tt>
 === Example tag page layout
 
   ---
@@ -44,15 +47,15 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
   <div id="tag-cloud">
     {{ site | tag_cloud }}
   </div>
-  
-  
+
+
 === Example layout of an Atom feed
 
   ---
   layout: nil
   ---
   <?xml version="1.0" encoding="utf-8"?>
-  <feed xmlns="http://www.w3.org/2005/Atom">  
+  <feed xmlns="http://www.w3.org/2005/Atom">
    <title>Your Title - {{ page.tag }}</title>
    <link href="http://example.com{{ page.url }}" rel="self"/>
    <link href="http://example.com/tag/{{ page.tag }}.html"/>
