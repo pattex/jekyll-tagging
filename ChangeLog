@@ -1,3 +1,7 @@
+== 0.5.0 [unreleased]
+
+* Added rel="tag" to posts' tag links.
+
 == 0.4.0 [2012-10-22]
 
 * Heavy refactoring to better support monkey patching.
