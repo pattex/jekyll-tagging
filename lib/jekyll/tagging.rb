@@ -35,10 +35,15 @@ module Jekyll
           data = { 'layout' => layout, 'posts' => posts.sort.reverse! }
 
           name = yield data if block_given?
+          name ||= tag
+
+          tag_dir = site.config["tag_#{type}_dir"]
+          tag_dir = File.join(tag_dir, (pretty? ? name : ''))
+
+          page_name = "#{pretty? ? 'index' : name}#{site.layouts[data['layout']].ext}"
 
           site.pages << TagPage.new(
-            site, site.source, site.config["tag_#{type}_dir"],
-            "#{name || tag}#{site.layouts[data['layout']].ext}", data
+            site, site.source, tag_dir, page_name, data
           )
         end
       }
@@ -69,6 +74,10 @@ module Jekyll
     def active_tags
       return site.tags unless site.config["ignored_tags"]
       site.tags.reject { |t| site.config["ignored_tags"].include? t[0] }
+    end
+
+    def pretty?
+      @pretty ||= (site.permalink_style == :pretty || site.config['tag_permalink_style'] == 'pretty')
     end
 
   end
@@ -105,7 +114,7 @@ module Jekyll
 
     def tag_url(tag, type = :page, site = Tagger.site)
       url = File.join('', site.config["tag_#{type}_dir"], ERB::Util.u(tag))
-      site.permalink_style == :pretty ? url : url << '.html'
+      site.permalink_style == :pretty || site.config['tag_permalink_style'] == 'pretty' ? url : url << '.html'
     end
 
     def tags(obj)
