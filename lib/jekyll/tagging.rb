@@ -32,7 +32,7 @@ module Jekyll
     def new_tag(tag, posts)
       self.class.types.each { |type|
         if layout = site.config["tag_#{type}_layout"]
-          data = { 'layout' => layout, 'posts' => posts.sort.reverse! }
+          data = { 'layout' => layout, 'posts' => posts.sort.reverse!, 'tag' => tag }
 
           name = yield data if block_given?
           name ||= tag
@@ -89,8 +89,6 @@ module Jekyll
       self.data    = data
 
       super(site, base, dir[-1, 1] == '/' ? dir : '/' + dir, name)
-
-      data['tag'] ||= basename
     end
 
     def read_yaml(*)
