@@ -12,7 +12,7 @@ Install it:
   
 Add this line to your Jekyll project's Gemfile:
 
-  gem 'jekyll-contentblocks'
+  gem 'jekyll-tagging'
 
 Add the following to your <tt>_plugins/ext.rb</tt> file:
 
