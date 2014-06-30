@@ -122,6 +122,12 @@ module Jekyll
       tags.join(', ')
     end
 
+    def keywords(obj)
+      return '' if not obj['tags']
+      tags = obj['tags'].dup
+      tags.join(',')  
+    end
+
     def active_tag_data(site = Tagger.site)
       return site.config['tag_data'] unless site.config["ignored_tags"]
       site.config["tag_data"].reject { |tag, set| site.config["ignored_tags"].include? tag }
