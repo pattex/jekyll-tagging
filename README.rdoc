@@ -32,6 +32,11 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
 
 (<tt>tag_page_dir</tt> and <tt>tag_feed_dir</tt> can have the same value.)
 
+=== Pretty page links
+
+If your Jekyll <tt>permalink</tt> configuration is set to something other than <tt>:pretty</tt>, and you still want to have pretty tag links define the following in your <tt>_config.yml</tt>:
+
+  tag_permalink_style: pretty
 
 === Ignoring tags
 
