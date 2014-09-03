@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors = ["Arne Eilermann", "Jens Wille"]
   s.date = "2014-09-03"
   s.description = "Jekyll plugin to automatically generate a tag cloud and tag pages."
-  s.email = ["eilermann@lavabit.com", "jens.wille@uni-koeln.de"]
+  s.email = ["arne@kleinerdrei.net", "jens.wille@uni-koeln.de"]
   s.extra_rdoc_files = ["ChangeLog"]
   s.files = ["ChangeLog", "README.rdoc", "Rakefile", "lib/jekyll/tagging.rb", "lib/jekyll/tagging/version.rb"]
   s.homepage = "http://github.com/pattex/jekyll-tagging"

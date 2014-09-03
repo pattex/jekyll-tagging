@@ -9,7 +9,7 @@ begin
       :version      => Jekyll::Tagging::VERSION,
       :summary      => %q{Jekyll plugin to automatically generate a tag cloud and tag pages.},
       :authors      => ['Arne Eilermann', 'Jens Wille'],
-      :email        => ['eilermann@lavabit.com', 'jens.wille@uni-koeln.de'],
+      :email        => ['arne@kleinerdrei.net', 'jens.wille@uni-koeln.de'],
       :license      => %q{MIT},
       :homepage     => :pattex,
       :dependencies => %w[ruby-nuggets]
