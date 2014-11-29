@@ -45,7 +45,7 @@ If your Jekyll <tt>permalink</tt> configuration is set to something other than <
 Sometimes you don't want tag pages generated for certain pages. That's ok! Just add <tt>ignored_tags: [tags,to,ignore]</tt> to your <tt>_config.yml</tt>
 === Example tag page layout
 
-(Save this to _layouts/tag_page.html if using the _config.yml snippet above.)
+(Save this to <tt>_layouts/tag_page.html</tt> if using the <tt>_config.yml</tt> snippet above.)
 
   ---
   layout: default
