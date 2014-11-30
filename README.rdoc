@@ -23,7 +23,9 @@ And in your <tt>_config.yml</tt> you have to define your layout used to generate
   tag_page_layout: tag_page
   tag_page_dir: tag
 
-Now you got a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you got a <tt>tags</tt> filter which you can feed withe a <tt>post</tt> or a <tt>site</tt> object to get a link list of all its tags.
+This will look for <tt>_layouts/tag_page.html</tt>, and use it to generate tag pages into the <tt>_site/tag</tt> directory.
+
+Now you have a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you have a <tt>tags</tt> filter which you can feed with a <tt>post</tt> or a <tt>site</tt> object to get a link list of all its tags.
 
 You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt> define the following:
 
@@ -42,6 +44,8 @@ If your Jekyll <tt>permalink</tt> configuration is set to something other than <
 
 Sometimes you don't want tag pages generated for certain pages. That's ok! Just add <tt>ignored_tags: [tags,to,ignore]</tt> to your <tt>_config.yml</tt>
 === Example tag page layout
+
+(Save this to <tt>_layouts/tag_page.html</tt> if using the <tt>_config.yml</tt> snippet above.)
 
   ---
   layout: default
