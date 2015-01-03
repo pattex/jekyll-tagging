@@ -79,7 +79,7 @@ module Jekyll
     end
 
     def active_tags
-      site.tags.reject { |t,posts| @ignored_tags.include? t or posts.size < @threshold}
+      site.tags.reject { |tag, posts| @ignored_tags.include? tag or posts.size < @threshold}
     end
 
     def pretty?
