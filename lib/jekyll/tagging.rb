@@ -111,7 +111,7 @@ module Jekyll
     end
 
     def tag_url(tag, type = :page, site = Tagger.site)
-      url = File.join('', site.config["tag_#{type}_dir"], ERB::Util.u(tag))
+      url = File.join('', site.config["base_url"].to_s, site.config["tag_#{type}_dir"], ERB::Util.u(tag))
       site.permalink_style == :pretty || site.config['tag_permalink_style'] == 'pretty' ? url << '/' : url << '.html'
     end
 
@@ -125,7 +125,7 @@ module Jekyll
     def keywords(obj)
       return '' if not obj['tags']
       tags = obj['tags'].dup
-      tags.join(',')  
+      tags.join(',')
     end
 
     def active_tag_data(site = Tagger.site)
