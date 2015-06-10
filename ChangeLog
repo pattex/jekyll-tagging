@@ -1,3 +1,9 @@
+== 1.0.0 [2015-06-10]
+
+* Generate prettier urls for tag with whitespaces or non ASCII characters. ATTENTION: Your urls may change!
+* Added support for site.config["baseurl"]. (Tsukasa ŌMOTO)
+* Added trailing slashes to permalinks. (Pyry Kontio)
+
 == 0.6.0 [2014-09-03]
 
 * Pretty permalinks for tag pages. (Steve Valaitis)
