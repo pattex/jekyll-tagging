@@ -1,9 +1,25 @@
 require 'nuggets/range/quantile'
+require 'nuggets/i18n'
 require 'erb'
 
 module Jekyll
 
+  module Helpers
+
+    # call-seq:
+    #   jekyll_tagging_slug(str) => new_str
+    #
+    # Substitutes any diacritics in _str_ with their ASCII equivalents,
+    # whitespaces with dashes and converts _str_ to downcase.
+    def jekyll_tagging_slug(str)
+      str.replace_diacritics.downcase.gsub(/\s/, '-')
+    end
+
+  end
+
   class Tagger < Generator
+
+    include Helpers
 
     safe true
 
@@ -40,7 +56,7 @@ module Jekyll
           tag_dir = site.config["tag_#{type}_dir"]
           tag_dir = File.join(tag_dir, (pretty? ? name : ''))
 
-          page_name = "#{pretty? ? 'index' : name}#{site.layouts[data['layout']].ext}"
+          page_name = "#{pretty? ? 'index' : jekyll_tagging_slug(name)}#{site.layouts[data['layout']].ext}"
 
           site.pages << TagPage.new(
             site, site.source, tag_dir, page_name, data
@@ -99,6 +115,8 @@ module Jekyll
 
   module Filters
 
+    include Helpers
+
     def tag_cloud(site)
       active_tag_data.map { |tag, set|
         tag_link(tag, tag_url(tag), :class => "set-#{set}")
@@ -111,7 +129,7 @@ module Jekyll
     end
 
     def tag_url(tag, type = :page, site = Tagger.site)
-      url = File.join('', site.config["baseurl"].to_s, site.config["tag_#{type}_dir"], ERB::Util.u(tag))
+      url = File.join('', site.config["baseurl"].to_s, site.config["tag_#{type}_dir"], ERB::Util.u(jekyll_tagging_slug(tag)))
       site.permalink_style == :pretty || site.config['tag_permalink_style'] == 'pretty' ? url << '/' : url << '.html'
     end
 
