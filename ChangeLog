@@ -1,3 +1,7 @@
+== 1.0.1 [2015-06-11]
+
+* Substitution of non ASCII characters and whitespaces, also when 'tag_permalink_style: pretty'.
+
 == 1.0.0 [2015-06-10]
 
 * Generate prettier urls for tag with whitespaces or non ASCII characters. ATTENTION: Your urls may change!

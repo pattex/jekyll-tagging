@@ -1,22 +1,22 @@
 # -*- encoding: utf-8 -*-
-# stub: jekyll-tagging 1.0.0 ruby lib
+# stub: jekyll-tagging 1.0.1 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "jekyll-tagging"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Arne Eilermann", "Jens Wille"]
-  s.date = "2015-06-10"
+  s.date = "2015-06-11"
   s.description = "Jekyll plugin to automatically generate a tag cloud and tag pages."
   s.email = ["arne@kleinerdrei.net", "jens.wille@uni-koeln.de"]
   s.extra_rdoc_files = ["ChangeLog"]
   s.files = ["ChangeLog", "README.rdoc", "Rakefile", "lib/jekyll/tagging.rb", "lib/jekyll/tagging/version.rb"]
   s.homepage = "http://github.com/pattex/jekyll-tagging"
   s.licenses = ["MIT"]
-  s.post_install_message = "\njekyll-tagging-1.0.0 [2015-06-10]:\n\n* Generate prettier urls for tag with whitespaces or non ASCII characters. ATTENTION: Your urls may change!\n* Added support for site.config[\"baseurl\"]. (Tsukasa \u{14c}MOTO)\n* Added trailing slashes to permalinks. (Pyry Kontio)\n\n"
-  s.rdoc_options = ["--title", "jekyll-tagging Application documentation (v1.0.0)", "--charset", "UTF-8", "--line-numbers", "--all", "--main", "ChangeLog"]
+  s.post_install_message = "\njekyll-tagging-1.0.1 [2015-06-11]:\n\n* Substitution of non ASCII characters and whitespaces, also when 'tag_permalink_style: pretty'.\n\n"
+  s.rdoc_options = ["--title", "jekyll-tagging Application documentation (v1.0.1)", "--charset", "UTF-8", "--line-numbers", "--all", "--main", "ChangeLog"]
   s.rubygems_version = "2.4.6"
   s.summary = "Jekyll plugin to automatically generate a tag cloud and tag pages."
 
