@@ -40,6 +40,28 @@ If your Jekyll <tt>permalink</tt> configuration is set to something other than <
 
   tag_permalink_style: pretty
 
+=== Adding Tags to Posts
+
+Tags help organize content. Add space-delimited lowercase tags to FrontMatter, e.g.
+
+  ---
+  author: John Doe
+  tags: inventory returns seller buyer
+  ---
+
+
+=== Adding tags to the main blog page
+
+Put this in your `index.html`
+
+  <span class="post-meta">{{ post.author }} • {{ post.date | date: "%b %-d, %Y" }} •  {{post | tags }} </span>
+
+=== Adding tags to a post
+
+Put this in your `post.html`
+
+  <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %} • {{ page | tags }}</p>
+
 === Ignoring tags
 
 Sometimes you don't want tag pages generated for certain pages. That's ok! Just add <tt>ignored_tags: [tags,to,ignore]</tt> to your <tt>_config.yml</tt>
