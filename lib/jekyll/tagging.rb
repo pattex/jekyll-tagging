@@ -48,8 +48,8 @@ module Jekyll
     def new_tag(tag, posts)
       self.class.types.each { |type|
         if layout = site.config["tag_#{type}_layout"]
-          data = site.config["tag_#{type}_data"] || {}
-          data.merge!('layout' => layout, 'posts' => posts.sort.reverse!, 'tag' => tag)
+          data = { 'layout' => layout, 'posts' => posts.sort.reverse!, 'tag' => tag }
+          data.merge!(site.config["tag_#{type}_data"] || {})
 
           name = yield data if block_given?
           name ||= tag
