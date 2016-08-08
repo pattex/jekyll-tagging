@@ -15,6 +15,37 @@ module Jekyll
       str.to_s.replace_diacritics.downcase.gsub(/\s/, '-')
     end
 
+    # return an array containing the source tag plus child tags (if any)
+    def expand_tags(source_tag,tag_hierarchy_hash)
+      
+
+      # must keep a list of tags already handled to guard against cycles
+      tags_seen = [source_tag.downcase]
+
+      if tag_hierarchy_hash.has_key?(source_tag.downcase)      
+        tag_hierarchy_hash[source_tag.downcase].each{ |child_tag|
+          unless tags_seen.map{|t| t.downcase}.include?(child_tag.downcase)
+            tags_seen.push(child_tag.downcase)
+          end  
+        }
+      end
+
+      # only using 2 passes for now. ideally we'd goo as deep as needed
+      # while monitoring for cycles
+      tags_seen.each{ |tag_seen|
+        if tag_hierarchy_hash.has_key?(tag_seen.downcase)      
+          tag_hierarchy_hash[tag_seen.downcase].each{ |child_tag|
+            unless tags_seen.map{|t| t.downcase}.include?(child_tag.downcase)
+              tags_seen.push(child_tag.downcase)
+            end  
+          }
+        end
+      }
+
+      tags_seen
+
+    end  
+
   end
 
   class Tagger < Generator
@@ -42,7 +73,7 @@ module Jekyll
     # A <tt>tag_page_layout</tt> have to be defined in your <tt>_config.yml</tt>
     # to use this.
     def generate_tag_pages
-      active_tags.each { |tag, posts| new_tag(tag, posts) }
+        active_tags.each { |tag, posts| new_tag(tag, posts) }
     end
 
     def new_tag(tag, posts)
@@ -66,7 +97,7 @@ module Jekyll
       }
     end
 
-    def add_tag_cloud(num = 5, name = 'tag_data')
+    def add_tag_cloud(num = 7, name = 'tag_data')
       s, t = site, { name => calculate_tag_cloud(num) }
       s.respond_to?(:add_payload) ? s.add_payload(t) : s.config.update(t)
     end
@@ -82,15 +113,42 @@ module Jekyll
         [tag.to_s, range < (size = posts.size) ? range = size : size]
       }
 
-
       range = 1..range
 
       tags.sort!.map! { |tag, size| [tag, range.quantile(size, num)] }
     end
 
     def active_tags
-      return site.tags unless site.config["ignored_tags"]
-      site.tags.reject { |t| site.config["ignored_tags"].include? t[0] }
+
+      # if the config tag_hierarchy_file is a valid yaml file, it will
+      # be used to "expand" tags to include sub tags
+      if path_to_hierarchy_config = site.config["tag_hierarchy_file"]
+
+        # hash of the form "tag"=> ["child","tags"]
+        tag_hierarchy = YAML.load(File.read(path_to_hierarchy_config))
+
+        tags = site.tags
+
+        tags.each { |tag, posts_for_this_tag| 
+        
+          child_tags = expand_tags(tag,tag_hierarchy)
+
+          all_posts_with_dups = posts_for_this_tag + site.posts.docs.select{|post| 
+            post.data["tags"].any?{|tag| 
+              child_tags
+                .map{ |el| el.downcase }
+                .include?(tag.downcase)
+            }
+          }
+
+          tags[tag] = all_posts_with_dups.uniq
+
+        }
+        tags
+      else
+        return site.tags unless site.config["ignored_tags"]
+        site.tags.reject { |t| site.config["ignored_tags"].include? t[0] }
+      end  
     end
 
     def pretty?
