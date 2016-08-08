@@ -88,7 +88,7 @@ Sometimes you don't want tag pages generated for certain pages. That's ok! Just 
    {% endfor %}
   </feed>
 
-== Tag hierarchy
+=== Tag hierarchy
 
 To inform `jekyll-tagging` of your tag hierarchy, please add a config parameter as follows:
 
