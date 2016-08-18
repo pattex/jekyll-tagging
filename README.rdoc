@@ -9,7 +9,7 @@ jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages plus fee
 Install it:
 
   gem install jekyll-tagging
-  
+
 Add this line to your Jekyll project's Gemfile:
 
   gem 'jekyll-tagging'
@@ -63,6 +63,8 @@ Sometimes you don't want tag pages generated for certain pages. That's ok! Just 
 
 
 === Example layout of an Atom feed
+
+(Save this to <tt>_layouts/tag_feed.xml</tt> if using the <tt>_config.yml</tt> snippet above.)
 
   ---
   layout: nil
