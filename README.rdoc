@@ -4,6 +4,17 @@ By Arne Eilermann <mailto:arne@kleinerdrei.net> and Jens Wille <mailto:jens.will
 
 jekyll-tagging is a Jekyll plugin, to add a tag cloud and per tag pages plus feeds to your Jekyll generated Website.
 
+== Tags
+This plugin does not reinvent Jekyll's tagging feature. It just makes it easy to use.
+<https://jekyllrb.com/docs/frontmatter/>
+
+Add space-delimited lowercase tags to FrontMatter, e.g.
+
+  ---
+  author: Willow Rosenberg
+  tags: feminism anti-capitalism witchcraft
+  ---
+
 == Usage
 
 Install it:
@@ -39,28 +50,6 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
 If your Jekyll <tt>permalink</tt> configuration is set to something other than <tt>:pretty</tt>, and you still want to have pretty tag links define the following in your <tt>_config.yml</tt>:
 
   tag_permalink_style: pretty
-
-=== Adding Tags to Posts
-
-Tags help organize content. Add space-delimited lowercase tags to FrontMatter, e.g.
-
-  ---
-  author: John Doe
-  tags: inventory returns seller buyer
-  ---
-
-
-=== Adding tags to the main blog page
-
-Put this in your `index.html`
-
-  <span class="post-meta">{{ post.author }} • {{ post.date | date: "%b %-d, %Y" }} •  {{post | tags }} </span>
-
-=== Adding tags to a post
-
-Put this in your `post.html`
-
-  <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %} • {{ page | tags }}</p>
 
 === Ignoring tags
 
