@@ -54,6 +54,14 @@ If your Jekyll <tt>permalink</tt> configuration is set to something other than <
 === Ignoring tags
 
 Sometimes you don't want tag pages generated for certain pages. That's ok! Just add <tt>ignored_tags: [tags,to,ignore]</tt> to your <tt>_config.yml</tt>
+
+=== Extra data on tag pages
+
+You can attach extra data to generated tag pages by specifying <tt>tag_page_data</tt> in <tt>_config.yml</tt> (this also works for <tt>tag_feed_data</tt>). For example, you might want to exclude tag pages from being picked up by `jekyll-sitemap`:
+
+  tag_page_data:
+    sitemap: false
+
 === Example tag page layout
 
 (Save this to <tt>_layouts/tag_page.html</tt> if using the <tt>_config.yml</tt> snippet above.)
