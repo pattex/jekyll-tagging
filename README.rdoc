@@ -101,6 +101,32 @@ Sometimes you don't want tag pages generated for certain pages. That's ok! Just 
    {% endfor %}
   </feed>
 
+=== Tag hierarchy
+
+To inform jekyll-tagging` of your tag hierarchy, please add a config parameter as follows:
+
+    tag_hierarchy_file: "tag_hierarchy.yml"
+
+
+where <tt>"tag_hierarchy.yml"</tt> is a YAML file of the form parent-tag: ["child-tag","other-child-tag"].
+
+Sample tag hierarchy file:
+
+    scala: 
+      [ "akka", "sbt", "play-framework","slick","scalacheck","scalatest","spark","sparksql"]
+    
+    python:
+      ["pandas","scikit-learn"]
+    
+    play-framework:
+      ["play","play 2","play2","play framework"]
+    
+    php:
+      ["php 5.4","yii","phpmyadmin","phpunit"]
+
+
+This will cause tag pages and tag clouds to take tag hierarchy information into account.
+
 == Links
 
 <b></b>
