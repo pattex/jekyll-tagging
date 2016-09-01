@@ -115,7 +115,7 @@ module Jekyll
 
   end
 
-  module Filters
+  module TaggingFilters
 
     include Helpers
 
@@ -155,3 +155,5 @@ module Jekyll
   end
 
 end
+
+Liquid::Template.register_filter(Jekyll::TaggingFilters)
