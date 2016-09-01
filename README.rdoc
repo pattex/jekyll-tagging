@@ -36,7 +36,7 @@ And in your <tt>_config.yml</tt> you have to define your layout used to generate
 
 This will look for <tt>_layouts/tag_page.html</tt>, and use it to generate tag pages into the <tt>_site/tag</tt> directory.
 
-Now you have a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you have a <tt>tags</tt> filter which you can feed with a <tt>post</tt> or a <tt>site</tt> object to get a link list of all its tags.
+Now you have a new filter called <tt>tag_cloud</tt> which you can use with the <tt>site</tt> object as argument in your layout to get a cloud of all your site's tags. The tags are linked to their related tag page. Furthermore, you have a <tt>tags</tt> filter which you can feed with a <tt>post</tt> or a <tt>page</tt> object to get a link list of all its tags.
 
 You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt> define the following:
 
