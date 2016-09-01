@@ -12,7 +12,7 @@ begin
       :email        => ['arne@kleinerdrei.net', 'jens.wille@uni-koeln.de'],
       :license      => %q{MIT},
       :homepage     => :pattex,
-      :dependencies => %w[ruby-nuggets]
+      :dependencies => %w[nuggets]
     }
   }}
 rescue LoadError => err
