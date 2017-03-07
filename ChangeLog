@@ -1,6 +1,10 @@
-== 1.1.0
+== 1.1.0 [2017-03-07]
 
 * Added ability to append extra data to all tag pages. (tfe)
+* Provides compatibility to the current jekyll (3.4.1).
+* A few fixes. (felipe)
+* Some documentation improvements. (wsmoak, jonathanpberger)
+* Prooves who is the worst open source maintainer. (pattex ^__^)
 
 == 1.0.1 [2015-06-11]
 
