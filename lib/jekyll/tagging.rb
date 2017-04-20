@@ -106,6 +106,8 @@ module Jekyll
       self.content = data.delete('content') || ''
       self.data    = data
 
+      self.data['title'] = site.layouts[site.config['tag_page_layout']].data['title'] || site.config['tag_page_title'] || "Tag #{data['tag']}"
+
       super(site, base, dir[-1, 1] == '/' ? dir : '/' + dir, name)
     end
 
