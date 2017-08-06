@@ -1,6 +1,7 @@
 require 'nuggets/range/quantile'
 require 'nuggets/i18n'
 require 'erb'
+require 'translit'
 
 module Jekyll
 
@@ -12,7 +13,7 @@ module Jekyll
     # Substitutes any diacritics in _str_ with their ASCII equivalents,
     # whitespaces with dashes and converts _str_ to downcase.
     def jekyll_tagging_slug(str)
-      str.to_s.replace_diacritics.downcase.gsub(/\s/, '-')
+      Translit.convert(str.to_s.replace_diacritics.downcase.gsub(/\s/, '-'), :english).gsub(/'/, '')
     end
 
   end
