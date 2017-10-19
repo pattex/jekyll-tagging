@@ -120,9 +120,16 @@ module Jekyll
     include Helpers
 
     def tag_cloud(site)
+      separator =
+        if Tagger.site.config['tag_cloud_separator']
+          Tagger.site.config['tag_cloud_separator'].to_s
+        else
+          ' '
+        end
+
       active_tag_data.map { |tag, set|
         tag_link(tag, tag_url(tag), :class => "set-#{set}")
-      }.join(' ')
+      }.join(separator)
     end
 
     def tag_link(tag, url = tag_url(tag), html_opts = nil)
@@ -136,10 +143,17 @@ module Jekyll
     end
 
     def tags(obj)
+      separator =
+        if Tagger.site.config['tag_separator']
+          Tagger.site.config['tag_separator'].to_s
+        else
+          ', '
+        end
+
       tags = obj['tags'].dup
       tags.map! { |t| t.first } if tags.first.is_a?(Array)
       tags.map! { |t| tag_link(t, tag_url(t), :rel => 'tag') if t.is_a?(String) }.compact!
-      tags.join(', ')
+      tags.join(separator)
     end
 
     def keywords(obj)
