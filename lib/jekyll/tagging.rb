@@ -29,13 +29,6 @@ module Jekyll
 
     class << self; attr_accessor :types, :site; end
 
-    @@classifiers={
-        'log'=>proc{|classes,value,min,max|
-          scaled = (classes*(Math.log(value) - Math.log(min))/(Math.log(max) - Math.log(min))).to_i
-          scaled == classes ? classes : scaled+1},
-        'linear'=>proc{|classes,value,min,max| (1..max).quantile(value, classes)}
-    }
-
     def initialize(config)
       @ignored_tags=config["ignored_tags"] || []
       @threshold=(config["tag_threshold"] || '1').to_i
@@ -82,7 +75,7 @@ module Jekyll
     end
 
     def add_tag_cloud(num = 5, name = 'tag_data')
-      s, t = site, { name => calculate_tag_cloud(@@classifiers[@classifier].curry[num]) }
+      s, t = site, { name => calculate_tag_cloud(num) }
       s.respond_to?(:add_payload) ? s.add_payload(t) : s.config.update(t)
     end
 
@@ -91,9 +84,16 @@ module Jekyll
     #
     # [[<TAG>, <CLASS>], ...]
     def calculate_tag_cloud(classifier)
-      tags = active_tags.map { |tag, posts| [tag, posts.size] }
-      min, max = tags.map { |tag, size| size }.minmax
-      tags.sort!.map! { |tag, size| [tag, classifier.call(size,min,max)] }
+      range = 0
+
+      tags = active_tags.map { |tag, posts|
+        [tag.to_s, range < (size = posts.size) ? range = size : size]
+      }
+
+
+      range = 1..range
+
+      tags.sort!.map! { |tag, size| [tag, range.quantile(size, num)] }
     end
 
     def active_tags
@@ -101,7 +101,7 @@ module Jekyll
     end
 
     def pretty?
-      @pretty ||= (site.permalink_style == :pretty || @permalink_style == 'pretty')
+      @pretty ||= (site.permalink_style == :pretty || site.config['tag_permalink_style'] == 'pretty')
     end
 
   end
@@ -155,7 +155,8 @@ module Jekyll
     end
 
     def active_tag_data(site = Tagger.site)
-      return site.config['tag_data']
+      return site.config['tag_data'] unless site.config["ignored_tags"]
+      site.config["tag_data"].reject { |tag, set| site.config["ignored_tags"].include? tag }
     end
   end
 
