@@ -29,13 +29,6 @@ module Jekyll
 
     class << self; attr_accessor :types, :site; end
 
-    def initialize(config)
-      @ignored_tags=config["ignored_tags"] || []
-      @threshold=(config["tag_threshold"] || '1').to_i
-      @permalink_style=config['tag_permalink_style']
-      @classifier=config['tag_classifier'] || 'linear'
-    end
-
     def generate(site)
       self.class.site = self.site = site
 
@@ -83,7 +76,7 @@ module Jekyll
     # classes are: set-1..set-5.
     #
     # [[<TAG>, <CLASS>], ...]
-    def calculate_tag_cloud(classifier)
+    def calculate_tag_cloud(num = 5)
       range = 0
 
       tags = active_tags.map { |tag, posts|
@@ -97,7 +90,8 @@ module Jekyll
     end
 
     def active_tags
-      site.tags.reject { |tag, posts| @ignored_tags.include? tag or posts.size < @threshold}
+      threshold = (config["tag_threshold"] || '1').to_i
+      site.tags.reject { |tag, posts| @ignored_tags.include? tag or posts.size < threshold}
     end
 
     def pretty?
