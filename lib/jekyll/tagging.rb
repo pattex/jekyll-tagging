@@ -90,8 +90,8 @@ module Jekyll
     end
 
     def active_tags
-      return site.tags unless site.config["ignored_tags"]
-      site.tags.reject { |t| site.config["ignored_tags"].include? t[0] }
+      threshold = (config["tag_threshold"] || '1').to_i
+      site.tags.reject { |tag, posts| site.config["ignored_tags"].include? tag or posts.size < threshold}
     end
 
     def pretty?
