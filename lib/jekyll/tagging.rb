@@ -91,7 +91,8 @@ module Jekyll
     end
 
     def active_tags
-      site.tags.reject { |t| site.config["ignored_tags"].include? t[0]}
+      return site.tags unless site.config["ignored_tags"]
+      site.tags.reject { |t| site.config["ignored_tags"].include? t[0] }
     end
 
     def pretty?
