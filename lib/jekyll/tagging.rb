@@ -29,6 +29,13 @@ module Jekyll
 
     class << self; attr_accessor :types, :site; end
 
+    @@classifiers = {
+        'log' => proc{|classes, value, min, max|
+          scaled = (classes * (Math.log(value) - Math.log(min)) / (Math.log(max) - Math.log(min))).to_i
+          scaled == classes ? classes : scaled + 1},
+        'linear' => proc{|classes, value, min, max| (1..max).quantile(value, classes)}
+    }
+
     def generate(site)
       self.class.site = self.site = site
 
@@ -68,7 +75,8 @@ module Jekyll
     end
 
     def add_tag_cloud(num = 5, name = 'tag_data')
-      s, t = site, { name => calculate_tag_cloud(num) }
+      classifier = config['tag_classifier'] || 'linear'
+      s, t = site, { name => calculate_tag_cloud(@@classifiers[classifier].curry[num]) }
       s.respond_to?(:add_payload) ? s.add_payload(t) : s.config.update(t)
     end
 
@@ -76,17 +84,10 @@ module Jekyll
     # classes are: set-1..set-5.
     #
     # [[<TAG>, <CLASS>], ...]
-    def calculate_tag_cloud(num = 5)
-      range = 0
-
-      tags = active_tags.map { |tag, posts|
-        [tag.to_s, range < (size = posts.size) ? range = size : size]
-      }
-
-
-      range = 1..range
-
-      tags.sort!.map! { |tag, size| [tag, range.quantile(size, num)] }
+    def calculate_tag_cloud(classifier)
+      tags = active_tags.map { |tag, posts| [tag, posts.size] }
+      min, max = tags.map { |tag, size| size }.minmax
+      tags.sort!.map! { |tag, size| [tag, classifier.call(size, min, max)] }
     end
 
     def active_tags
