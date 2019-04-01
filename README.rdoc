@@ -50,6 +50,20 @@ You can optionally define a per tag Atom/RSS feed.  In your <tt>_config.yml</tt>
 If your Jekyll <tt>permalink</tt> configuration is set to something other than <tt>:pretty</tt>, and you still want to have pretty tag links define the following in your <tt>_config.yml</tt>:
 
   tag_permalink_style: pretty
+  
+=== Generating links to tag pages
+
+The normal Jekyll slugify filter is different than that used by this plugin.  Hence, to generate links to tag pages, you probably want to use something like:
+
+    {%- if site.tag_page_dir -%}   
+      <a href="/{{site.tag_page_dir}}/{{ tag | jekyll_tagging_slug }}" >
+          {{ tag }}
+        </a>
+    {%- else -%}
+      <a href="{{site.tag_archive_path}}{{ tag | slugify }}">
+        {{ tag }}
+      </a>
+    {%- endif -%}
 
 === Ignoring tags
 
