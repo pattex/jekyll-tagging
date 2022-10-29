@@ -50,6 +50,12 @@ module Jekyll
         if layout = site.config["tag_#{type}_layout"]
           data = { 'layout' => layout, 'posts' => posts.sort.reverse!, 'tag' => tag }
           data.merge!(site.config["tag_#{type}_data"] || {})
+          # interpolate optional tag in the title
+          if (data['title'])
+            data['title'] = data['title'] % { 'tag': data['tag'] }
+          else
+            data['title'] = "Posts tagged #%{tag}" % { 'tag': data['tag'] }
+          end
 
           name = yield data if block_given?
           name ||= tag
