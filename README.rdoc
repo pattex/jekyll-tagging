@@ -62,6 +62,13 @@ You can attach extra data to generated tag pages by specifying <tt>tag_page_data
   tag_page_data:
     sitemap: false
 
+==== Page title including the tag name
+
+Specifically for the generated pages, there is an option to include the tag name into the title via `%{tag}`, for example:
+
+  tag_page_data:
+    title: "Posts tagged #%{tag}" # will generate title 'Posts tagged #news'
+
 === Example tag page layout
 
 (Save this to <tt>_layouts/tag_page.html</tt> if using the <tt>_config.yml</tt> snippet above.)
