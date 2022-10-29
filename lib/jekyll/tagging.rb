@@ -12,7 +12,7 @@ module Jekyll
     # Substitutes any diacritics in _str_ with their ASCII equivalents,
     # whitespaces with dashes and converts _str_ to downcase.
     def jekyll_tagging_slug(str)
-      str.to_s.replace_diacritics.downcase.gsub(/\s/, '-')
+      Jekyll::Utils::slugify(str.to_s, mode: 'latin', cased: true)
     end
 
   end
